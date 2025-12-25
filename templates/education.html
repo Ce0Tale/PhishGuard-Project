@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phishing Academy</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f1f5f9; font-family: sans-serif; color: #0f172a; }
+        .navbar { background: #0f172a; border-bottom: 3px solid #3b82f6; }
+        .academy-header { background: #1e293b; color: white; padding: 40px 0; }
+        .accordion-item { border: none; margin-bottom: 10px; border-radius: 8px !important; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .accordion-button:not(.collapsed) { background-color: #3b82f6; color: white; }
+        .step-num { font-weight: bold; color: #3b82f6; margin-right: 10px; }
+        .accordion-button:not(.collapsed) .step-num { color: white; }
+        .content-highlight { border-left: 4px solid #3b82f6; background: #f8fafc; padding: 15px; margin: 15px 0; }
+        .tech-box { background: #0f172a; color: #38bdf8; padding: 10px; border-radius: 5px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-dark">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">PHISHGUARD</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link" href="/">Scanner</a>
+            <a class="nav-link active" href="education.html">Academy</a>
+        </div>
+    </div>
+</nav>
+
+<div class="academy-header text-center">
+    <div class="container">
+        <h1>Phishing Academy</h1>
+        <p class="text-secondary">A Simple Guide to Staying Safe</p>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="accordion" id="phishAccordion">
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#c1">
+                    <span class="step-num">01</span> What is Phishing?
+                </button>
+            </h2>
+            <div id="c1" class="accordion-collapse collapse show" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <p>Phishing is a deceptive technique used to trick individuals into revealing sensitive information. It is "Social Engineering"—a hack of human behavior rather than software.</p>
+                    
+                    <div class="content-highlight">
+                        <strong>Primary Goals:</strong> Credential theft, financial fraud, and malware distribution.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c2">
+                    <span class="step-num">02</span> The Psychology of Deception
+                </button>
+            </h2>
+            <div id="c2" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <p>Scammers exploit emotions to bypass critical thinking:</p>
+                    <ul>
+                        <li><strong>Urgency:</strong> Forced action via fake deadlines.</li>
+                        <li><strong>Fear:</strong> Threats of account suspension or legal action.</li>
+                        <li><strong>Greed:</strong> Promises of unearned rewards or prizes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c3">
+                    <span class="step-num">03</span> URL Anatomy
+                </button>
+            </h2>
+            <div id="c3" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <p>Understanding how links are built is key to spotting lies.</p>
+                    
+                    <div class="tech-box mb-3">https://microsoft.com.security-check.xyz/login</div>
+                    <p>In this example, <strong>xyz</strong> is the real domain. The "microsoft.com" part is a deceptive subdomain.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c4">
+                    <span class="step-num">04</span> Identity Mimicry (Homoglyphs)
+                </button>
+            </h2>
+            <div id="c4" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <p>Homoglyphs are characters that look identical but are mathematically different.</p>
+                    <div class="row text-center mb-3">
+                        <div class="col-6"><div class="p-2 border border-success rounded">Real: apple.com</div></div>
+                        <div class="col-6"><div class="p-2 border border-danger rounded">Fake: аpple.com</div></div>
+                    </div>
+                    <p>The "a" in the fake link is Cyrillic. Browsers see this as: <code class="text-danger">xn--pple-43d.com</code>.</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c5">
+                    <span class="step-num">05</span> Common Channels
+                </button>
+            </h2>
+            <div id="c5" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <ul>
+                        <li><strong>Smishing:</strong> Phishing via SMS.</li>
+                        <li><strong>Vishing:</strong> Phishing via voice/phone calls.</li>
+                        <li><strong>Quishing:</strong> Malicious QR codes.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c6">
+                    <span class="step-num">06</span> Corporate Threats
+                </button>
+            </h2>
+            <div id="c6" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <p><strong>BEC (Business Email Compromise):</strong> Impersonating executives to authorize fraudulent wire transfers.</p>
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="accordion-item">
+            <h2 class="accordion-header">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c7">
+                    <span class="step-num">07</span> Professional Defense
+                </button>
+            </h2>
+            <div id="c7" class="accordion-collapse collapse" data-bs-parent="#phishAccordion">
+                <div class="accordion-body">
+                    <ol>
+                        <li><strong>MFA:</strong> Always use app-based authenticators.</li>
+                        <li><strong>Manual Navigation:</strong> Never click links for sensitive actions; type the URL directly.</li>
+                        <li><strong>Password Managers:</strong> Use unique, complex credentials for every service.</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<footer class="text-center py-4 text-muted border-top">
+    <small>PhishGuard Academy &copy; 2025</small>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishGuard Forensic Audit</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f1f3f5; font-family: sans-serif; }
+        .navbar { background: #0f172a; border-bottom: 3px solid #3b82f6; }
+        .main-card { border: none; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+        .spec-label { font-size: 0.75rem; text-transform: uppercase; color: #64748b; font-weight: bold; }
+        .verdict-badge { padding: 8px 15px; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px; }
+        .opinion-text { background: #1e293b; color: #38bdf8; border-left: 4px solid #38bdf8; padding: 15px; font-family: monospace; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand navbar-dark mb-4">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">PHISHGUARD</a>
+        <div class="navbar-nav ms-auto">
+            <a class="nav-link active" href="/">Scanner</a>
+            <a class="nav-link" href="education.html">Academy</a>
+        </div>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="card main-card p-4 mb-4">
+        <div class="input-group input-group-lg">
+            <input type="text" id="urlInput" class="form-control" placeholder="Enter URL for analysis...">
+            <button class="btn btn-primary px-4" onclick="runAudit()">Audit URL</button>
+        </div>
+    </div>
+
+    <div id="resultsArea" style="display:none;">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card main-card p-4 h-100 text-center">
+                    <span class="spec-label">Risk Score</span>
+                    <h1 class="display-1 fw-bold my-2" id="riskScore">0%</h1>
+                    <div id="verdictBadge" class="verdict-badge">---</div>
+                    <hr>
+                    <div class="text-start">
+                        <div class="mb-2"><span class="spec-label">Length:</span> <span id="statLen">0</span></div>
+                        <div class="mb-2"><span class="spec-label">HTTPS:</span> <span id="statHttps">---</span></div>
+                        <div class="mb-2"><span class="spec-label">WWW:</span> <span id="statWww">---</span></div>
+                        <div class="mb-0"><span class="spec-label">Domain:</span> <span id="statTld">---</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8">
+                <div class="card main-card p-4 h-100">
+                    <h5 class="fw-bold mb-3">Forensic Summary</h5>
+                    <div id="neutralOpinion" class="opinion-text">> Awaiting input...</div>
+                    <div class="table-responsive mt-3">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr><th>Layer</th><th>Observation</th><th>Analysis</th></tr>
+                            </thead>
+                            <tbody id="forensicTable"></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center py-4 mt-5 text-muted border-top">
+    <small>PhishGuard Project &copy; 2025</small>
+</footer>
+
+<script>
+async function runAudit() {
+    const url = document.getElementById('urlInput').value;
+    if(!url) return;
+    try {
+        // I added /scan to the end of your link below
+        const response = await fetch('https://liv-locatable-interpenetratively.ngrok-free.dev/scan', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({url: url})
+        });
+        const data = await response.json();
+        document.getElementById('resultsArea').style.display = 'block';
+        document.getElementById('riskScore').innerText = data.risk_score + "%";
+        document.getElementById('verdictBadge').innerText = data.verdict;
+        document.getElementById('neutralOpinion').innerText = "> " + data.neutral_opinion;
+        
+        document.getElementById('statLen').innerText = data.specs.length + " characters";
+        document.getElementById('statHttps').innerText = data.specs.has_https;
+        document.getElementById('statWww').innerText = data.specs.has_www;
+        document.getElementById('statTld').innerText = data.specs.has_tld;
+
+        const tableBody = document.getElementById('forensicTable');
+        tableBody.innerHTML = "";
+        data.forensic_report.forEach(item => {
+            tableBody.insertAdjacentHTML('beforeend', `
+                <tr>
+                    <td><span class="badge bg-secondary">${item.type}</span></td>
+                    <td class="fw-bold">${item.obs}</td>
+                    <td class="text-muted small"><em>${item.thought}</em></td>
+                </tr>`);
+        });
+
+        const badge = document.getElementById('verdictBadge');
+        badge.className = "verdict-badge " + (data.risk_score > 60 ? "bg-danger text-white" : data.risk_score > 25 ? "bg-warning text-dark" : "bg-success text-white");
+    } catch (e) { alert("Connection Error"); }
+}
+</script>
+</body>
+</html>
