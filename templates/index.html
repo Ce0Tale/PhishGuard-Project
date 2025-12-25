@@ -21,7 +21,7 @@
         <a class="navbar-brand fw-bold" href="/">PHISHGUARD</a>
         <div class="navbar-nav ms-auto">
             <a class="nav-link active" href="/">Scanner</a>
-            <a class="nav-link" href="education.html">Academy</a>
+            <a class="nav-link" href="/education.html">Academy</a>
         </div>
     </div>
 </nav>
@@ -77,14 +77,22 @@
 async function runAudit() {
     const url = document.getElementById('urlInput').value;
     if(!url) return;
+    
+    // Change button text while loading
+    const btn = document.querySelector('button');
+    btn.innerText = "Analyzing...";
+    btn.disabled = true;
+
     try {
-        // I added /scan to the end of your link below
-        const response = await fetch('https://liv-locatable-interpenetratively.ngrok-free.dev/scan', {
+        // UPDATED: Now points to your Render Cloud Link
+        const response = await fetch('https://phishguard-project-y5cx.onrender.com/scan', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({url: url})
         });
+        
         const data = await response.json();
+        
         document.getElementById('resultsArea').style.display = 'block';
         document.getElementById('riskScore').innerText = data.risk_score + "%";
         document.getElementById('verdictBadge').innerText = data.verdict;
@@ -108,7 +116,12 @@ async function runAudit() {
 
         const badge = document.getElementById('verdictBadge');
         badge.className = "verdict-badge " + (data.risk_score > 60 ? "bg-danger text-white" : data.risk_score > 25 ? "bg-warning text-dark" : "bg-success text-white");
-    } catch (e) { alert("Connection Error"); }
+    } catch (e) { 
+        alert("Server is waking up or Connection Error. Please try again in 30 seconds."); 
+    } finally {
+        btn.innerText = "Audit URL";
+        btn.disabled = false;
+    }
 }
 </script>
 </body>
